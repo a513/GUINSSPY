@@ -245,7 +245,7 @@ def returnRequest(ents, self1, frameWho):
     self1.TFrame1.pack(in_=self1.Frame1,expand=1,fill='both',padx=5,pady='1mm 0',side='top')
     rb = guinsspy_support.varDB.get()
     if (rb == '0'):
-        self1.TLabel1.configure(text=''' ИОК/PKI. Хранилище сертификатов Berkley DB (Mozilla)''')
+        self1.TLabel1.configure(text=''' ИОК/PKI. Хранилище сертификатов Berkeley DB (Mozilla)''')
     else:
         self1.TLabel1.configure(text=''' ИОК/PKI. Хранилище сертификатов SQLite (Google)''')
     self1.TLabel1.configure(image=guinsspy_support.img_svitok, compound='left')
@@ -484,7 +484,7 @@ class PKI__GUI_for_NSS:
         self.TRadiobutton1.configure(variable=guinsspy_support.varDB)
         self.TRadiobutton1.configure(value="0")
         self.TRadiobutton1.configure(takefocus="")
-        self.TRadiobutton1.configure(text='''Berkley DB''')
+        self.TRadiobutton1.configure(text='''Berkeley DB''')
 
         self.TRadiobutton2 = ttk.Radiobutton(self.Frame5)
         self.TRadiobutton2.configure(variable=guinsspy_support.varDB)
