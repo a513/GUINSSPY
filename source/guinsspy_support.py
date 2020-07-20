@@ -4572,7 +4572,7 @@ def selectDB(top):
     for i in range(0, 8):
         self1.TButtonR[i].configure(state='normal')
     if (rb == '0'):
-        self1.TLabel1.configure(text=' NSS. Хранилище сертификатов на базе Berkley')
+        self1.TLabel1.configure(text=' NSS. Хранилище сертификатов на базе Berkley DB')
     else:
         self1.TLabel1.configure(text=' NSS. Хранилище сертификатов на базе SQLite')
     listMod()
