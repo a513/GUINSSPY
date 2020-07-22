@@ -413,7 +413,7 @@ class PKI__GUI_for_NSS:
 #RadioButton
         self.typeRab = ["Разработчик", "Управление модулями PKCS#11",
 	    "Управление сертификатами", "Подписать файл", "Зашифровать файл", 
-	    "Проверить ЭП файла", "Извлечь оригинал из PKCS#7", "Создать запрос"]
+	    "Проверить ЭП файла", "Извлечь оригинал из PKCS#7", "Создать запрос", "Создать SW/Cloud токен"]
         i = 0
         self.TButtonR = []
         count_rab = len(self.typeRab)
@@ -422,7 +422,7 @@ class PKI__GUI_for_NSS:
     	    self.TButtonRB.configure(text=self.typeRab[i])
     	    self.TButtonRB.configure(variable=guinsspy_support.varBut)
     	    self.TButtonRB.configure(value=i)
-    	    self.TButtonRB.pack(in_=self.Frame2,expand=1,fill='x',side= 'top', ipady=3,padx=5,pady=0)
+    	    self.TButtonRB.pack(in_=self.Frame2,expand=1,fill='x',side= 'top', ipady=6,padx=5,pady=0)
     	    self.TButtonRB.configure(command=guinsspy_support.ReloadNSS)
 #    	    self.TButtonRB.configure(state='disabled')
     	    self.TButtonR.append(self.TButtonRB)

@@ -3,6 +3,8 @@
 
 import sys
 import os
+import webbrowser
+
 
 try:
     from Tkinter import *
@@ -328,6 +330,65 @@ M9nB9r5g/ETYxubMKwGuQddvIhwJsWYV4qV/ob38glsAPRh0qWKGpSnlykS6wE4mkXf9GSKx38cvnf3N
 QeQVuBmtGTMCoBrqkV+7FnXGWc3xyvPzPwPPZ8B3qZEQtxMKxZEqytbNUpvzsOD9d4WWTkFevmuqsCzUoMHIW34FLS0D41WVOw7J6/HZ8H+6WwfgaEBDfPZFV+E4hTQ3
 fZ6yPrvk934g5G/+iPPFryB9PlRDPcK2YPtWaGkBTZt6qPf+DDz/d0AkyVR+Sadl/PJLHoxXVQ4gkZiIP/Ckmn4u8u6/4vz0NpxjjlfUNsDG9SC0czuyw8/Y1mdtfwH7
 sceD6Pq1CHETwVABu3dCWyv0H5iOX3xh8FDkns/A8+8IpOonzsbn+y5KTfeMiRXxqsqNn1Gez1q3NbXqOfOiwG+ANfGqytsPtr//D69ZQJxkiqeNAAAAAElFTkSuQmCC"""
+
+creator_small = """
+R0lGODlhPABOAOf/ABQUHBwTExYVGBgUHhkVEh8UEB0WGygVFxkaIRkbGRwbFSAaFSQYHiQZFxgcHhwbHh8bGiQdFCgcFB8gJx8hHyUgGiMgIx0iIyofGyQhICkgISMj
+HDIgHjcgGyskGTAjGjEiJy0kJC8kIDUjHColKSomJSwmICUoJzsoGEEnHjspHUAnIzItGDgqJzsqIzYsHi4tMTEtLDQtJzUsMi8vKDguLy8yL08qIkssJEUtL0MvJEcu
+JEIvKTkyLEguKT4xKjY0KDczMjU1LTM1OlExKE4zKT43MTs5LUo2JTc7Ljo6MjU6QT86Kkc3MUs3K1szJE81Pl8yLkE5RFQ3Iz87OjU9STs9OlM3M0M9Jz48QDk+QFo3
+Jlw2Llo2NUY8P1g5L2E2OD1BSGE9NmM9MWA9PFpANGc8PWw9N0VHSlFERUlHRUNIUGdBME1GTnE/MlRHQlRGT0tKQ2NFMFxGQXNBRGxFPGpFQ2JJPHJGMXpCR09OUVJP
+TYZHOXpKQlpSV3ZMQnlNPXJOTXBQRIFNP2RTYV1XVntROlZaV19YUXZTP2xVT1hZY1laXY5TWIlWUYtXSYhbQG9gYH9eUGpjX2NlYIhcTWtkWHZhWZFbSHFhbGBna4Rg
+TGZmbIZfXGtlcZViVpRnWmxybn1ubJBpaJVqUXZve5JsXnJ0d4tvYXJ0fpVuWnt0bmx4gX97jKR1ZK10X595WKF5X5p7bXyChJ97ZaF6boWBfJx7d32Di3iEk5CAfLiD
+eqyJbKmIhayKcrCIe5qOiYmSoa2Lfa+NaI2Sm46TlqWOiKiPfrmTdrKWj8WShLeWhr2UibyYgZqfqJyho5mhsaefnL+dj7Khlrmgj7qfmMaio6WstMGmn8elmcKnmM6k
+l6qvsbKuqL6tpKmywciun8+toMqupsyxtcW4r7S8zNq1o9i2qda2sNK4qdG5sNe5pb6+wLvAyb3E1N/BrN/DtOPDvd7GvcPM28zMzM7P2crT5OzQx9DZ4dHc7dfk9vrf
+0+Pq6eDt/ebz+////yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH5BAEKAP8ALAAAAAA8AE4AAAj+ABMkeGBAAwYNGg5oCFEhw4YEDhxYsCBAAIUYMnrIMFGiB5AeIIGIBCKk
+JJAjST4eYXLkCBAlQjYEMFDRQQIBDxJMzLAQoQYRIkqUoCAgwQaiFmnQiME0RpAeT0H2cFmyJUqVTE4eUQJkAwECRQVCTECBZwiEGESYCGEiwwMKZB9UpEBDho0YNIRI
+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
+"""
 
 exit_16x16 = """
 R0lGODlhEAAQAMYAAP///5gBAfz398+Hh6AVFdJSUsMAANMAAMYAANJRUdNVVcgA
@@ -6353,6 +6414,208 @@ def frameCertManager (frameManager):
 #    frameManager.ButtonViewCert.pack_forget()
     typeImportCert(0, frameManager)
 
+def readdistr(url, w):
+    print('readdistr=' + url)
+    pass
+
+def openURL(url):
+    webbrowser.open_new_tab(url)
+
+def seturl(txt, w, url, tag):
+#    print("seturl=" + url + tag )
+    if (txt.winfo_depth() > 1):
+        txt.tag_configure(tag, background = '#43ce80', relief='raised', borderwidth=1)
+    else:
+        txt.tag_configure(tag, background = 'black', foreground='white')
+    w.delete(0, END)
+    w.insert(END, url)
+
+def clearurl(txt, w, tag):
+#    print("clearurl=" + tag )
+#    w.delete(0, END)
+    if (txt.winfo_depth() > 1):
+        txt.tag_configure(tag, background = '', foreground='red', relief='flat', underline='on')
+    else:
+        txt.tag_configure(tag, background = '', foreground='')
+    pass
+
+def frameCreateToken(frameInfo):
+    global img_creator
+    global entryd
+
+    entryd = StringVar()
+    entryd.set = 'EntryD'
+    print ('frameCreateToken')
+    txt = Text(frameInfo, bg="white", wrap='word', padx='1mm', relief='flat', bd=0, highlightthickness=0,highlightbackground='white', highlightcolor='white')
+    vsb = ttk.Scrollbar(frameInfo, orient='vertical', command=txt.yview)
+    txt['yscrollcommand'] = vsb.set
+    vsb.pack(anchor='center',  expand=0, fill='y', side='right', pady='0 15mm')
+    txt.pack(anchor='n', expand=1, fill='both', side='top', pady='1mm 0')
+    lab = Entry(frameInfo, textvariable=entryd,highlightthickness=1,highlightbackground='skyblue', highlightcolor='skyblue')
+    lab.pack(side='top',pady=0,fill='x', expand=1, padx=0,anchor='center', ipady=2)
+    lab.insert(END, 'ENTRY')
+    txt.image_create("current", image=img_creator)
+    fbold = "-family Times -size 10 -weight bold -slant italic"
+    url={}
+    url['d1'] = "http://soft.lissi.ru/ls_product/skzi/PKCS11"
+    url['d2'] = "https://github.com/a513/GuiCreateLS11SW2016Token/raw/master/distr/guicreate_sw_token_linux32.tar.bz2"
+    url['d3'] = "https://github.com/a513/GuiCreateLS11SW2016Token/raw/master/distr/guicreate_sw_token_linux64.tar.bz2"
+    url['d4'] = "https://github.com/a513/GuiCreateLS11SW2016Token/raw/master/distr/guicreate_sw_token_mac.tar.bz2"
+    url['d5'] = "https://github.com/a513/GuiCreateLS11SW2016Token/raw/master/distr/guicreate_sw_token_win32.exe"
+    url['d6'] = "https://github.com/a513/GuiCreateLS11SW2016Token/raw/master/distr/guicreate_sw_token_win64.exe"
+    url['d7'] = "http://soft.lissi.ru/ls_product/skzi/LS11SW2016/"
+    url['d8'] = "http://soft.lissi.ru/solution/ls11cloud"
+    url['d9'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/guils11cloud_conf_linux32.tar.bz2"
+    url['d10'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/guils11cloud_conf_linux64.tar.bz2"
+    url['d11'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/guils11cloud_conf_mac.tar.bz2"
+    url['d12'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/guils11cloud_conf_win32.exe"
+    url['d13'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/guils11cloud_conf_win64.exe"
+    url['d14'] = "https://github.com/a513/guils11cloud_config/raw/master/distr/AndroWishApp-debug.apk"
+    txt.tag_configure('tagLoad', foreground='blue', font='Times 11 bold italic')
+    txt.tag_configure('tagLoad1', foreground='blue', font='Times 10 bold italic')
+
+    for tag in  ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'd14']:
+#        print ('D=' + tag)
+        txt.tag_bind(tag, "<Any-Enter>", (lambda event, e=url[tag], tag1=tag: seturl(txt, lab, e, tag1)))
+        txt.tag_configure(tag, foreground='red', underline='on')
+        txt.tag_bind(tag, "<Any-Leave>", (lambda event, e=lab, tag1=tag: clearurl(txt, e, tag1)))
+#Запуск браузера
+        txt.tag_bind(tag, '<1>', (lambda event, e=url[tag]: openURL(e)))
+
+    its = txt.index('insert')
+    txt.insert (END,  "\t  Графическая оболочка для Network Security Services (NSS)\n\n")
+    ite = txt.index('insert')
+    txt.tag_add('tagLoad', its, ite)
+    txt.insert(END, "       Если вы хотите работать с российской криптографией и у вас нет \
+  соответствующего токена , не огорчайтесь. \
+  \n       Вы можете создать на своем компьютере программный токен LS11SW2016, либо подключиться к облачному \
+  токену LS11CLOUD с полной поддержкой российских криптоалгоритмом.\
+  \n       Это позволит вам не только обучиться, но и, при желании,  организовать Инфраструктуру Открытых Ключей \
+  (ИОК/PKI) в вашей организации или с коллегами")
+    txt.insert(END, "\n\n")
+    txt.insert(END, "1. Создание программного токена ")
+    its = txt.index('insert')
+    txt.insert(END, "LS11SW2016")
+    ite = txt.index('insert')
+    txt.tag_add('d1', its, ite)
+    txt.insert(END, " (утилита guicreate_sw_token)")
+    txt.insert(END, "\n\n")
+
+    its_sw = txt.index('insert')
+    txt.insert(END, "        Утилита guicreate_sw_token функционирует на ОС Linux, MS Windows, MacOS и др.")
+    ite_sw = txt.index('insert')
+    txt.tag_add('tagLoad1', its_sw, ite_sw)
+    txt.insert(END, "\n")
+    txt.insert(END, "        Загрузить дистрибутивыы для платформ Linux, MS Windows, OS X можно ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'здесь:' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('tagLoad', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'Linux32' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d2', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'Linux64' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d3', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'OS X' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d4', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'WIN32' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d5', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'WIN64' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d6', its_sw1, ite_sw1)
+    txt.insert(END, "\n")
+
+    txt.insert(END, "        При необходимости распакуйте дистрибутив и запустите его. В дальнейшем следуйте его подсказкам. \
+  Вы можете также воспользоваться ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, "инструкцией")
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d7', its_sw1, ite_sw1)
+    txt.insert(END, "\n")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, "        P.S. На платформе Android программный токен создается автоматически при первом запуске приложения")
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('tagLoad1', its_sw1, ite_sw1)
+    txt.insert(END, ".\n\n")
+
+    txt.insert(END, "2. Подключение к облачному токену ")
+    its1 = txt.index('insert')
+    txt.insert(END, "LS11Cloud")
+    ite1 = txt.index('insert')
+    txt.tag_add('d8', its1, ite1)
+    txt.insert(END, " (утилита guils11cloud_conf)")
+    txt.insert(END, "\n\n")
+
+    its_sw = txt.index('insert')
+    txt.insert(END, "        Утилита guils11cloud_conf функционирует на ОС Linux, MS Windows, MacOS, Android и др.")
+    ite_sw = txt.index('insert')
+    txt.tag_add('tagLoad1', its_sw, ite_sw)
+    txt.insert(END, "\n")
+    txt.insert(END, "        Загрузить дистрибутивыы для платформ Linux, MS Windows, OS X, Android можно ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'здесь:' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('tagLoad', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'Linux32' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d9', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'Linux64' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d10', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'OS X' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d11', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'WIN32' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d12', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'WIN64' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d13', its_sw1, ite_sw1)
+    txt.insert(END, "\n\t - ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, 'AndroWishApp-debug.apk' )
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d14', its_sw1, ite_sw1)
+    txt.insert(END, "\n")
+
+    txt.insert(END, "        При необходимости распакуйте дистрибутив и запустите его. В дальнейшем следуйте его подсказкам. \
+  Вы можете также воспользоваться ")
+    its_sw1 = txt.index('insert')
+    txt.insert(END, "инструкцией")
+    ite_sw1 = txt.index('insert')
+    txt.tag_add('d8', its_sw1, ite_sw1)
+    txt.insert(END, "\n")
+
 
 def frameCreateReq(frameRequest):
     frameRequest.Labelframe2 = LabelFrame(frameRequest, text='''Выберите токен для генерации ключа''',bd=0)
@@ -6704,7 +6967,9 @@ XJTADY/P33U5vd7S4+F+fH13goF8hnmEhwISGoImBB4OghsQLAsYLHAfAyUtKQ8ABQekpAYBCSItQQA7
     global updatecert
     global helpview
     global borderImage
-
+    global creator_small
+    global img_creator
+    
     varDB.set(1)
     varBut.set(0)
     lastBut.set(1)
@@ -6741,6 +7006,7 @@ XJTADY/P33U5vd7S4+F+fH13goF8hnmEhwISGoImBB4OghsQLAsYLHAfAyUtKQ8ABQekpAYBCSItQQA7
         img_opendb = ImageTk.PhotoImage(data=openDB_16x16)
         img_anketa = ImageTk.PhotoImage(data=anketa_34x50)
         img_exit = ImageTk.PhotoImage(data=exit_16x16)
+        img_creator = ImageTk.PhotoImage(data=creator_small)
     else:
         image_me = PhotoImage(data=me_393x295)
         image_nss = PhotoImage(data=nss_143x110)
@@ -6749,7 +7015,8 @@ XJTADY/P33U5vd7S4+F+fH13goF8hnmEhwISGoImBB4OghsQLAsYLHAfAyUtKQ8ABQekpAYBCSItQQA7
         img_opendb = PhotoImage(data=openDB_16x16)
         img_anketa = PhotoImage(data=anketa_34x50)
         img_exit = PhotoImage(data=exit_16x16)
-
+        img_creator = PhotoImage(data=creator_small)
+        
     borderImage = PhotoImage(data=borderImageData)
     viewcert = PhotoImage(data=view_18x16)
     selectdir = PhotoImage(data=icon_openfile_18x16)
@@ -6795,6 +7062,8 @@ XJTADY/P33U5vd7S4+F+fH13goF8hnmEhwISGoImBB4OghsQLAsYLHAfAyUtKQ8ABQekpAYBCSItQQA7
 #    frameSignFile(self1, self1.FrameRab[8], 3)
 #Создать запрос на сертификат
     frameCreateReq(self1.FrameRab[7])
+#Создать программный или облачный токен
+    frameCreateToken(self1.FrameRab[8])
     
 ###############    
     meLabel = Label(self1.FrameRab[0])
