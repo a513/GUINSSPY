@@ -418,17 +418,15 @@ class PKI__GUI_for_NSS:
         self.TButtonR = []
         count_rab = len(self.typeRab)
         for i in range(0, count_rab):
-    	    self.TButtonRB = ttk.Radiobutton(self.Frame2)
+    	    self.TButtonRB = ttk.Radiobutton(self.Frame2, padding='2 3 2 4')
     	    self.TButtonRB.configure(text=self.typeRab[i])
     	    self.TButtonRB.configure(variable=guinsspy_support.varBut)
     	    self.TButtonRB.configure(value=i)
-    	    self.TButtonRB.pack(in_=self.Frame2,expand=1,fill='x',side= 'top', ipady=6,padx=5,pady=0)
+    	    self.TButtonRB.pack(in_=self.Frame2,expand=1,fill='x',side= 'top', anchor='s',ipady=6,padx=5,pady=0)
     	    self.TButtonRB.configure(command=guinsspy_support.ReloadNSS)
-#    	    self.TButtonRB.configure(state='disabled')
     	    self.TButtonR.append(self.TButtonRB)
 
 
-#        self.TButton10 = ttk.Button(self.Frame2, command=sys.exit)
         self.TButton10 = ttk.Button(top, command=sys.exit)
         self.TButton10.configure(takefocus="")
         self.TButton10.configure(text='''Завершаем''')

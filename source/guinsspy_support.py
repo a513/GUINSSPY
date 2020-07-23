@@ -4,6 +4,7 @@
 import sys
 import os
 import webbrowser
+import urllib.request, urllib.parse
 
 
 try:
@@ -6219,7 +6220,6 @@ def showhelp (e, w, help, htext, hanchor):
 def hidehelp (e, help):
     help.place_forget()
 
-
 def frameCertManager (frameManager):
     global viewcert
     global helpview
@@ -6410,13 +6410,50 @@ def frameCertManager (frameManager):
     labelfr.STButton3.bind('<Enter>', lambda e=labelfr.STButton3: showhelp(e, labelfr.STButton3, helpview, 'Выбор файла', 'right'))
     labelfr.STButton3.bind('<Leave>', lambda e=labelfr.STButton3: hidehelp(e, helpview))
 
-#    frameManager.ButtonImport.pack_forget()
-#    frameManager.ButtonViewCert.pack_forget()
     typeImportCert(0, frameManager)
 
-def readdistr(url, w):
-    print('readdistr=' + url)
-    pass
+def readdistr(w, url):
+    global helpview
+#    print('readdistr=' + url)
+    forig = helpview.cget('font')
+    htext = '\n Загрузка дистрибутива. \n Придется подождать!\n'
+    helpview.configure(text=htext, font='helvetica 11 bold roman', foreground='blue')
+    helpview.place(in_=w, relx='0.5', rely='0.20', anchor='n')
+    helpview.tkraise()
+    
+#    showhelp(w, w, helpview, '\n Загрузка дистрибутива. \n Придется подождать!\n', 'right')
+#Блокируем фрейм
+    root.tk.call('tk', 'busy', 'hold', root)
+    root.update()
+    try:
+        file = urllib.request.urlopen(url).read() 
+    except:
+        tkMessageBox.showerror(title="Загрузка дистрибутива", message='Не удалось загрузить дистрибутив\n' + url)
+#Разблокируем главное окно
+        root.tk.call('tk', 'busy', 'forget', root)
+        hidehelp(w, helpview)
+        helpview.configure(font=forig, foreground='black')
+        return -1
+    if sys.platform != "win32":
+        home = os.environ["HOME"]
+    else:
+        home = os.environ["USERPROFILE"]
+    hidehelp(w, helpview)
+    helpview.configure(font=forig, foreground='black')
+    dir_file = tkFileDialog.askdirectory(initialdir=home, title='Выбор каталог для дистрибутива')
+    if (dir_file == ''):
+#Разблокируем главное окно
+        root.tk.call('tk', 'busy', 'forget', root)
+        return -1
+    bfile = os.path.basename(url)
+    fsave = os.path.join(dir_file, bfile)
+    f=open(fsave, 'wb')
+    f.write(file)
+    f.close()
+#Разблокируем главное окно
+    root.tk.call('tk', 'busy', 'forget', root)
+    tkMessageBox.showinfo(title="Загрузка дистрибутива", message='Дистрибутив\n' + url + '\nсохранен в файле\n' + fsave)
+    return 0
 
 def openURL(url):
     webbrowser.open_new_tab(url)
@@ -6453,7 +6490,7 @@ def frameCreateToken(frameInfo):
     txt.pack(anchor='n', expand=1, fill='both', side='top', pady='1mm 0')
     lab = Entry(frameInfo, textvariable=entryd,highlightthickness=1,highlightbackground='skyblue', highlightcolor='skyblue')
     lab.pack(side='top',pady=0,fill='x', expand=1, padx=0,anchor='center', ipady=2)
-    lab.insert(END, 'ENTRY')
+    lab.insert(END, '')
     txt.image_create("current", image=img_creator)
     fbold = "-family Times -size 10 -weight bold -slant italic"
     url={}
@@ -6477,10 +6514,14 @@ def frameCreateToken(frameInfo):
     for tag in  ['d1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'd14']:
 #        print ('D=' + tag)
         txt.tag_bind(tag, "<Any-Enter>", (lambda event, e=url[tag], tag1=tag: seturl(txt, lab, e, tag1)))
+
         txt.tag_configure(tag, foreground='red', underline='on')
         txt.tag_bind(tag, "<Any-Leave>", (lambda event, e=lab, tag1=tag: clearurl(txt, e, tag1)))
 #Запуск браузера
-        txt.tag_bind(tag, '<1>', (lambda event, e=url[tag]: openURL(e)))
+        if (tag == 'd1' or tag == 'd7' or tag == 'd8'):
+            txt.tag_bind(tag, '<1>', (lambda event, e=url[tag]: openURL(e)))
+        else:
+            txt.tag_bind(tag, '<1>', (lambda event, e=url[tag], wload=txt: readdistr(wload, e)))
 
     its = txt.index('insert')
     txt.insert (END,  "\t  Графическая оболочка для Network Security Services (NSS)\n\n")
@@ -7067,12 +7108,12 @@ XJTADY/P33U5vd7S4+F+fH13goF8hnmEhwISGoImBB4OghsQLAsYLHAfAyUtKQ8ABQekpAYBCSItQQA7
     
 ###############    
     meLabel = Label(self1.FrameRab[0])
-    meLabel.pack(anchor='center',expand=1,fill='both', padx= 5,pady= 5,side='top')
+    meLabel.pack(anchor='n',expand=1,fill='both', padx= 5,pady=0,side='top')
     meLabel.configure(background="#f3f3f3")
     meLabel.configure(image=image_me)
     root.tk.call('tk', 'busy', 'hold', self1.Frame2)
 
-    self1.TButton10.pack(in_=self1.Frame2,expand=1,fill='none',side= 'top' ,padx= 5)
+    self1.TButton10.pack(in_=self1.Frame2,expand=1,fill='none',side= 'top' ,padx= 5, pady='0 1mm')
 ###########
     helpview = Label(root, text="Просмотр сертификата", bg='#ffe0a6')
     ReloadNSS()
