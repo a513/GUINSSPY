@@ -4,8 +4,6 @@
 import sys
 import os
 import webbrowser
-import urllib.request, urllib.parse
-
 
 try:
     from Tkinter import *
@@ -14,11 +12,13 @@ except ImportError:
 
 v = sys.version
 try:
+    import urllib2
     import ttk
     py3 = False
     import tkFileDialog
     import tkMessageBox
 except ImportError:
+    import urllib.request, urllib.parse
     import tkinter.ttk as ttk
     from tkinter import filedialog, messagebox
     tkFileDialog = filedialog
@@ -6414,7 +6414,7 @@ def frameCertManager (frameManager):
 
 def readdistr(w, url):
     global helpview
-#    print('readdistr=' + url)
+    print('readdistr=' + url)
     forig = helpview.cget('font')
     htext = '\n Загрузка дистрибутива. \n Придется подождать!\n'
     helpview.configure(text=htext, font='helvetica 11 bold roman', foreground='blue')
@@ -6426,7 +6426,10 @@ def readdistr(w, url):
     root.tk.call('tk', 'busy', 'hold', root)
     root.update()
     try:
-        file = urllib.request.urlopen(url).read() 
+        if (py3 != True):
+            file = urllib2.urlopen(url).read() 
+        else:
+            file = urllib.request.urlopen(url).read() 
     except:
         tkMessageBox.showerror(title="Загрузка дистрибутива", message='Не удалось загрузить дистрибутив\n' + url)
 #Разблокируем главное окно
